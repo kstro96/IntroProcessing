@@ -1,21 +1,22 @@
 /*
     =>Codigo realizado por Alejandro Castro Martinez 
-      - email: alejokstro08@gmail.com
-        Ingenieria de Sistemas y Electronica
-  Introduccion al ambiente de programacion de Processing
-  
-  Ultima modificacion: 23/08/2017 Version: 1.0
-  
-  Funcionalidades del sistema: 
-    *Movimiento del mouse al clickear y arrastrar.
-    *Teclas de desplazamiento (Arriba, abajo, izquierda, derecha)
-    *Teclas w, a, s, d (WASD)
-    *Tecla r o Tecla R
-    *Tecla c o Tecla C
-    *Tecla p o Tecla P
-    
-  
-*/
+ - email: alejokstro08@gmail.com
+ Ingenieria de Sistemas y Electronica
+ Introduccion al ambiente de programacion de Processing
+ 
+ Ultima modificacion: 23/08/2017 Version: 1.0
+ 
+ Funcionalidades del sistema: 
+ *Movimiento del mouse al clickear y arrastrar
+ *Click del mouse sobre la pantalla
+ *Teclas de desplazamiento (Arriba, abajo, izquierda, derecha)
+ *Teclas w, a, s, d (WASD)
+ *Tecla r o Tecla R
+ *Tecla c o Tecla C
+ *Tecla p o Tecla P
+ 
+ 
+ */
 color bcolor = color(51, 51, 51); 
 color ellipseColor = color(200, 100, 10);
 color triangleColor = color(0, 100, 200);
@@ -38,6 +39,10 @@ float sensibility3D = 0.01;
 float sensibility2D = 0.5;
 float animationRate = 0.1;
 
+PVector p1 = new PVector(20,20);
+PVector p2 = new PVector(100,40);
+PVector p3 = new PVector(20,100);
+
 void setup() {
   size (900, 650, P3D);
 }
@@ -49,8 +54,21 @@ void draw() {
     fill(ellipseColor);
     stroke(255);
     ellipse(width/2, height/2, 550, 550);
-    fill(triangleColor);
-    triangle(20, 20, width/2, height/2, 20, height-20);
+    if (play) {
+      float deltaX = (pmouseX-mouseX);
+      float deltaY = (pmouseY-mouseY);
+      fill(triangleColor);
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+      p1.x -= deltaX;
+      p2.x -= deltaX;
+      p3.x -= deltaX;
+      p1.y -= deltaY;
+      p2.y -= deltaY;
+      p3.y -= deltaY;
+    } else {
+      fill(triangleColor);
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+    }
   } else {
     translate(width/2, height/2, -distance);
     rotateX(-translateY);
@@ -176,10 +194,17 @@ void keyPressed() {
     translateX = 0;
     translateY = 0;
     distance = 0;
+    play = false;
+    PVector ran = PVector.random2D();
+    ran = new PVector(abs(ran.x),abs(ran.y));
+    p1 = PVector.mult(ran,random(0, width-100));
+    p2 = PVector.add(p1,new PVector(80,20));
+    p3 = PVector.add(p1,new PVector(0,80));
   }
   if (keyCode == 'P' || keyCode == 'p') {
-    if (mode) {
-      play = !play;
-    }
+    play = !play;
   }
+}
+void mouseClicked(){
+  play = !play;
 }
