@@ -1,0 +1,8 @@
+Para ejecutar este programa: 
+	*Descargar la carpeta comprimida
+	*Descomprimir la carpeta dentro de su ordenador
+	*Abrir Processing (Ejecutar el archivo "processing.exe"
+	*Dar click en la pestaña de abrir
+	*Buscar la carpeta que acaba de descomprimir y elecgir el archivo con nombre
+"IntroProcessing.pde"
+	*Dar click en el triangulo de ejecucion dentro del ambiente de desarrollo de processing
